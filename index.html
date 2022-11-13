@@ -1,0 +1,67 @@
+<html>
+<head>
+ <title>hi</title>
+ <style>
+ #network-status-online {
+ background: green;
+padding: 15px;
+border-radius: 5px;
+color: white;
+}
+#network-status-offline {
+background: red;
+padding: 15px;
+border-radius: 5px;
+color: white;
+}
+.no-network {
+font-weight: bold;
+color: red;
+}
+.available-network {
+font-weight: bold;
+color: green;
+}
+</style>
+</head>
+<body>
+<div>
+ <div id="network-status-online"></div>
+ <div id="network-status-offline"></div> 
+ <h1>Oops, the internet went out.</h1><p>How would you tell your user their internet connection is down but your site is working fine?</p>
+ <p id='network-status-text'>Try switching off your wifi or mobile internet to see a <span class='no-network'>No network connection</span> message.</p>
+</div>
+</body>
+
+<script>
+    function showOnlineStatus(isOnline, msg) {
+const networkStatusOnline = document.getElementById('network-status-online');
+const networkStatusOffline = document.getElementById('network-status-offline');
+ const networkStatusText = document.getElementById('network-status-text');
+ if (isOnline) {
+ networkStatusOffline.style.display = "none"
+ networkStatusOnline.style.display = "inline-block"
+ networkStatusOnline.innerText = msg;
+networkStatusText = "Try switching off your wifi or mobile internet to see a <span class='no-network'>no network connection</span> message."} 
+else {
+networkStatusOnline.style.display = "none"
+networkStatusOffline.style.display = "inline-block"
+networkStatusOffline.innerText = msg;
+networkStatusText = "Try switching on your wifi or mobile internet to see a <span class='available-network'>Back Online</span> message."
+}
+}
+window.addEventListener('load', () => {
+if (navigator.onLine) {
+showOnlineStatus(true, "You're online! ?");}
+ else {
+ showOnlineStatus(false, "You might be offline, please check your internet connection! ☹️");}
+ window.addEventListener('online', () => {
+ showOnlineStatus(true, "You are back online! ?");
+});
+window.addEventListener('offline', () => {
+showOnlineStatus(false, "You might be offline, please check your internet connection! ☹️");
+});
+});
+</script>
+
+</html>
